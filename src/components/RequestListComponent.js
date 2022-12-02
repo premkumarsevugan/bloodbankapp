@@ -1,169 +1,80 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+import Header from "./HeaderComponent";
 import {
-  Table,
-  Button,
-  Modal,
-  ModalBody,
-  ModalHeader,
-  Col,
-  Row
-} from "reactstrap";
-
-function RequestData({ toggleDetailsOpen, isDetailsOpen, data, setIndex }) {
-  if (data != null) {
-    const tabledata = data.map((request, key) => {
-      return (
-        <tr>
-          <th>{key + 1}</th>
-          <td>
-            <Button
-              color="link"
-              onClick={() => {
-                setIndex(key);
-                toggleDetailsOpen();
-              }}
-            >
-              {request.name}
-            </Button>
-          </td>
-          <td>{request.bloodGroup}</td>
-          <td>
-            {request.state}, {request.city}
-          </td>
-          <td>{request.createdAt}</td>
-        </tr>
-      );
-    });
-    return <tbody>{tabledata}</tbody>;
-  } else {
-    return <tbody></tbody>;
+    Form,
+    FormGroup,
+    Input,
+    Label,
+    Modal,
+    ModalBody,
+    ModalHeader,
+    Button,
+    Row,
+    Col
+  } from "reactstrap";
+import csc from "country-state-city";
+import axios from "axios";
+const RequestList = () =>{
+  const config = {
+    headers:{
+      'content-Type': 'application/json'
+    }
   }
-}
+  axios.post("https://1ddd-117-193-28-201.in.ngrok.io/donor/retrieve-donors/O%2B/Tamil%20Nadu/Coimbatore/Blood",config)
+  .then((res) => setData(res.data.data))
+  .catch(err => console.log(err))
+    const [resview,setResview] = useState(true);
+    const [selectedState,setSelectedState]=useState("");
+    const [city,setCity]=useState("");
+    const [need,setNeed] = useState("");
+    const [group,setGroup] = useState("");
+    const[data,setData]=useState([]);
+    const states = csc
+      .getStatesOfCountry("IN")
+      .map((state) => <option value={state.isoCode}>{state.name}</option>);
+    const cities = csc
+      .getCitiesOfState("IN", `${selectedState}`)
+      .map((city) => <option value={city.name}>{city.name}</option>);
+      const resultShow = (e) =>{
+        e.preventDefault();
+        console.log(selectedState,city,need,group);
+        setResview(true);
+        
 
-function RequestList(props) {
-  const [data, setData] = useState([]);
-  const [index, setIndex] = useState(-1);
-  useEffect(() => {
-    axios.get("/bloodrequest/getlatestrequests").then((response) => {
-      if (response.data.message == "found some documents !!") {
-        setData(response.data.List);
       }
-    });
-    // alert("got it");
-  }, []);
-  useEffect(() => {
-    axios.get("/bloodrequest/getlatestrequests").then((response) => {
-      if (response.data.message == "found some documents !!") {
-        setData(response.data.List);
-      }
-    });
-    // alert("got it");
-  }, [props.isLoggedIn]);
-  return (
-    <div style={{ backgroundColor: "floralwhite" }}>
-      <h4 className="text-center">
-        <strong>CURRENT REQUESTS</strong>
-      </h4>
-      <Table bordered>
-        <thead>
-          <tr>
-            <th>S.No.</th>
-            <th>Full Name</th>
-            <th>Blood Group</th>
-            <th>City, State</th>
-            <th>Date of Requirement</th>
-          </tr>
-        </thead>
-        <RequestData
-          toggleDetailsOpen={props.toggleDetailsOpen}
-          isDetailsOpen={props.isDetailsOpen}
-          data={data}
-          setIndex={setIndex}
-        />
-      </Table>
-      {index !== -1 && (
-        <Modal
-          isOpen={props.isDetailsOpen}
-          toggle={() => {
-            props.toggleDetailsOpen();
-            setIndex(-1);
-          }}
-        >
-          <ModalHeader
-            toggle={() => {
-              props.toggleDetailsOpen();
-              setIndex(-1);
-            }}
-          >
-            Patient Details
-          </ModalHeader>
-          <ModalBody>
-            <Table borderless>
-              <tbody>
-                <tr>
-                  <th>Full Name: </th>
-                  <td>{data[index].name}</td>
-                </tr>
-                <tr>
-                  <th>Blood Group: </th>
-                  <td>{data[index].bloodGroup}</td>
-                </tr>
-                <tr>
-                  <th>Age: </th>
-                  <td>{data[index].age}</td>
-                </tr>
-                <tr>
-                  <th>Date of Requirement: </th>
-                  <td>{data[index].requirementDate}</td>
-                </tr>
-                <tr>
-                  <th>Units Required: </th>
-                  <td>{data[index].unitsNeeded}</td>
-                </tr>
-                <tr>
-                  <th>Mobile Number: </th>
-                  <td>{data[index].mobileNumber}</td>
-                </tr>
-                <tr>
-                  <th>Alternate Mobile Number: </th>
-                  <td>{data[index].alternateMobileNumber}</td>
-                </tr>
-                <tr>
-                  <th>Hospital Name: </th>
-                  <td>{data[index].hospitalName}</td>
-                </tr>
-                <tr>
-                  <th>Hospital Location: </th>
-                  <td>x</td>
-                </tr>
-                <tr>
-                  <th>Patient Address: </th>
-                  <td>{data[index].patientAdress}</td>
-                </tr>
-                <tr>
-                  <th>State: </th>
-                  <td>{data[index].state}</td>
-                </tr>
-                <tr>
-                  <th>City: </th>
-                  <td>{data[index].city}</td>
-                </tr>
-                <tr>
-                  <th>Purpose: </th>
-                  <td>{data[index].purpose}</td>
-                </tr>
-                <tr>
-                  <th>Needs Covid-19 recoverd person's plasma?: </th>
-                  <td>{data[index].covidPlasma ? "Yes" : "No"}</td>
-                </tr>
-              </tbody>
-            </Table>
-          </ModalBody>
-        </Modal>
-      )}
-    </div>
-  );
-}
+    return(
+        <div>
+           
+      {resview ? (<div className="mb-3">
+        {/* <table>
+            <th>
+                <td md={3}>S.No</td>
+                <td md={3}>Name</td>
+                <td md={3}>Blood</td>
+                <td md={3}>Mobile</td>
+            </th>
+        </table> */}
+        <h1 className="heading mb-3">Available Donars</h1>
+        <div className="row">
+        <div className="col-2 t-h"></div>
+            <div className="col-2 t-h">S.No</div>
+            <div className="col-2 t-h">Name</div>
+            <div className="col-2 t-h">Blood</div>
+            <div className="col-2 t-h">Mobile</div>
+            <div className="col-2 t-h"></div>
+        </div>
+        {data.map((item,index) => (<div className="row">
+          <div className="col-2 item"></div>
+          <div className="col-2 item">{index+1}</div>
 
+            <div className="col-2 item">{item.fullName}</div>
+            <div className="col-2 item">{item.bloodGroup}</div>
+            <div className="col-2 item">{item.mobileNumber}</div>
+            <div className="col-2 item"></div>
+        </div>))}
+      </div>):null}
+      </div>
+      
+    );
+}
 export default RequestList;

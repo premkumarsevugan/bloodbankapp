@@ -202,10 +202,7 @@ class LoggedInHeader extends Component {
                 <NavItem>
                   {!this.props.isLoggedIn ? (
                     <>
-                    <Link to="/home" onClick={(e) => {
-                        e.preventDefault();
-                        alert("Log Out Success You Can Continue :)")
-                      }}>
+                    <Link to="/home">
                       <Button color="primary" >
                         <span className="fa fa-sign-in fa-lg"></span> Log out
                       </Button>

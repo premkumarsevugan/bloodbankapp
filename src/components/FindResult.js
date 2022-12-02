@@ -13,12 +13,14 @@ import {
     Col
   } from "reactstrap";
 import csc from "country-state-city";
+import axios from "axios";
 const FindResult = () =>{
     const [resview,setResview] = useState(false);
     const [selectedState,setSelectedState]=useState("");
     const [city,setCity]=useState("");
     const [need,setNeed] = useState("");
     const [group,setGroup] = useState("");
+    const[data,setData]=useState([]);
     const states = csc
       .getStatesOfCountry("IN")
       .map((state) => <option value={state.isoCode}>{state.name}</option>);
@@ -29,10 +31,20 @@ const FindResult = () =>{
         e.preventDefault();
         console.log(selectedState,city,need,group);
         setResview(true);
+        const config = {
+          headers:{
+            'content-Type': 'application/json'
+          }
+        }
+        axios.post("https://1ddd-117-193-28-201.in.ngrok.io/donor/retrieve-donors/O%2B/Tamil%20Nadu/Coimbatore/Blood",config)
+        .then((res) => setData(res.data.data))
+        .catch(err => console.log(err))
+
       }
     return(
         <div>
             <Header />
+            <h1 className="heading">Enter The Details To Search</h1>
             <Form className="mt-3">
         <FormGroup row>
             <div className="col-3"></div>
@@ -131,7 +143,7 @@ const FindResult = () =>{
         </Row>
         <Row>
         <div className="col-3"></div>
-        <div className="text-center">
+        <div className="text-center mb-2">
         <Button type="submit" color="primary" onClick={resultShow}>
           Find Donor
         </Button>
@@ -148,12 +160,24 @@ const FindResult = () =>{
                 <td md={3}>Mobile</td>
             </th>
         </table> */}
+        <h1 className="heading">Available Donars</h1>
         <div className="row">
-            <div className="col-3">S.No</div>
-            <div className="col-3">Name</div>
-            <div className="col-3">Blood</div>
-            <div className="col-3">Mobile</div>
+        <div className="col-2 t-h"></div>
+            <div className="col-2 t-h">S.No</div>
+            <div className="col-2 t-h">Name</div>
+            <div className="col-2 t-h">Blood</div>
+            <div className="col-2 t-h">Mobile</div>
+            <div className="col-2 t-h"></div>
         </div>
+        {data.map((item,index) => (<div className="row">
+          <div className="col-2 item"></div>
+          <div className="col-2 item">{index+1}</div>
+
+            <div className="col-2 item">{item.fullName}</div>
+            <div className="col-2 item">{item.bloodGroup}</div>
+            <div className="col-2 item">{item.mobileNumber}</div>
+            <div className="col-2 item"></div>
+        </div>))}
       </div>):null}
       </div>
       

@@ -130,3 +130,18 @@ input{
 .custom-shape-divider-top-1669919170 .shape-fill {
   fill: #FFFFFF;
 }
+
+.heading{
+  text-align: center;
+  margin-top: 20px;
+}
+.t-h{
+  font-size: 20px;
+  font-weight: 600;
+  height: 50px;
+  text-align: center;
+}
+.item{
+  height: 50px;
+  text-align: center;
+}
