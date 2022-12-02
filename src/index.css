@@ -1,0 +1,132 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+.footer {
+  /* background-image: url("./assets/bloodBg.jpg"); */
+  background-image: url("./img/bloodBg.jpg");
+  width: auto;
+  height: 700px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.det{
+  display: flex;
+
+}
+.main-form{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-items: center;
+}
+.det>h3{
+  color: #fff;
+
+}
+.det{
+  margin-bottom: 10px;
+}
+.det>input{
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 50px;
+  background: transparent;
+  border: 1px solid #f7f7f9;
+  /* border-radius: 10px;  */
+  border-bottom:1px solid #fff;
+  /* outline: 3px solid #fff; */
+}
+textarea{
+  width: 400px;
+  height: 200px;
+  background: transparent;
+  color: #fff;
+  border: 1px solid #f7f7f9; 
+  /* border-radius: 20px; */
+  border-bottom:1px solid #fff;
+}
+input:focus,textarea:focus{
+  outline: 2px solid #f28500;
+  border: none;
+  /* color: #f28500; */
+  /* color: red; */
+}
+::placeholder{
+  /* margin-left: 50px; */
+  color: #fff;
+  text-align: center;
+}
+input{
+  color: #fff;
+  text-align: center;
+}
+
+.head1{
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* margin-top: 20px; */
+}
+.head1>h2{
+  margin-top: 40px;
+  font-weight: 800;
+  text-align: center;
+}
+.buttonsub{
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid #fff;
+  background: transparent;
+  color: #fff;
+  transition: 1s;
+}
+.buttonsub:hover{
+  color: #fff;
+  background-color: red;
+}
+
+.contact-url{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+.contact-url>a{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.corou{
+  /* display: none; */
+}
+.cor-main{
+  margin:20px 20px;
+}
+.custom-shape-divider-top-1669919170 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-top-1669919170 svg {
+  position: relative;
+  display: block;
+  width: calc(239% + 1.3px);
+  height: 500px;
+}
+
+.custom-shape-divider-top-1669919170 .shape-fill {
+  fill: #FFFFFF;
+}
